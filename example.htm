@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+	
+	<head>
+		
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+		<script src="jquery.sonic-gauge-v0.1.min.js"></script>
+		
+		<script>
+		$(function (){
+
+			var GaugeA = $('#a').SonicGauge ();
+
+			var GaugeB = $('#b').SonicGauge ({
+				label	: 'Speed (MPH)',
+				start	: {angle: -225, num: 0},
+				end		: {angle: 45, num: 160},
+				markers	: [
+					{
+						gap: 20,
+						line: {"width": 20, "stroke": "none", "fill": "#eeeeee"},
+						text: {"space": 22, "text-anchor": "middle", "fill": "#333333", "font-size": 18}
+					},{
+						gap: 10, 
+						line: {"width": 12, "stroke": "none", "fill": "#aaaaaa"},
+						text: {"space": 18, "text-anchor": "middle", "fill": "#333333", "font-size": 12}
+					},{
+						gap: 5, 
+						line: {"width": 8, "stroke": "none", "fill": "#999999"}
+					}
+				],
+				style	: {
+					"label" : {"text-anchor": "middle", "fill": "#fff", "font-size": 16}
+				},
+				animation_speed : 100
+			});
+
+			var GaugeC = $('#c').SonicGauge ({
+				label	: 'Current (mA)',
+				margin	: 50,
+				start	: {angle: -225, num: 0},
+				end		: {angle: 45, num: 1},
+				markers	: [
+					{
+						gap: 10,
+						divide: 100,
+						toFixed: 2,
+						line: {"width": 20, "stroke": "none", "fill": "#eeeeee"},
+						text: {"space": 30, "text-anchor": "middle", "fill": "#333333", "font-size": 18}
+					},{
+						gap: 5,
+						divide: 100,
+						toFixed: 3,
+						line: {"width": 10, "stroke": "none", "fill": "#aaaaaa"},
+						text: {"space": 20, "text-anchor": "middle", "fill": "#333333", "font-size": 10},
+					},{
+						gap: 2.5,
+						divide: 100,
+						line: {"width": 3, "stroke": "none", "fill": "#999999"}
+					}
+				],
+				style	: {
+					"outline"	: {"fill": "r#f46a3a-#890b0b", "stroke": "#590303", "stroke-width": 4},
+					"center"	: {"fill": "#ae1e1e", "diameter": 8, "stroke": "#590303", "stroke-width": 1},
+					"needle"	: {"stroke": "none", "fill": "#fbdbdb"},
+					"label"		: {"text-anchor": "middle", "fill": "#fff", "font-size": 14}
+				}
+			});
+
+			function changeSpeed (current, increment, target) {
+				
+				if (current < target)
+				{
+					current += increment;
+				}
+				else if (current > target)
+				{
+					current -= increment;
+				}
+				else
+				{
+					changeSpeed (current, increment, target == 0? 160 : 0);
+					return;
+				}
+				
+				GaugeB.SonicGauge ('val', current);
+				setTimeout (function () {
+					changeSpeed (current, increment, target);
+				}, 100);
+				
+			}
+		
+			changeSpeed (0,5,160)
+			
+			setInterval (function () {
+				GaugeC.SonicGauge ('val', Math.random ())
+			}, 1000)
+
+		});
+		</script>
+		
+		<style media="screen" type="text/css">
+			.gauge {
+				float: left;
+				margin: 10px 30px;
+			}
+		</style>
+		
+	</head>
+	
+	<body>
+		
+		<div id='a' class="gauge"></div>
+		<div id='b' class="gauge"></div>
+		<div id='c' class="gauge"></div>
+		
+	</body>
+	
+</html>
