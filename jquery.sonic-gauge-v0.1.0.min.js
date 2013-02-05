@@ -1,7 +1,7 @@
 
 /**
- * Sonic Gauage jQuery Plugin v0.1
- * jQuery plugin to create and display SVG gauges using Rapha�lJS
+ * Sonic Gauge jQuery Plugin v0.1
+ * jQuery plugin to create and display SVG gauges using RaphaelJS
  * 
  * Copyright (c) 2013 Andy Burton (http://andyburton.co.uk)
  * GitHub https://github.com/andyburton/Sonic-Gauge
