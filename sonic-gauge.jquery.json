@@ -1,0 +1,30 @@
+{
+    "name": "sonic-gauge",
+    "title": "Sonic Gauge",
+    "description": "jQuery plugin to create and display SVG gauges using RaphaëlJS.",
+    "keywords": [
+        "gauge",
+        "graph",
+		"raphaeljs",
+		"svg"
+    ],
+    "version": "0.1.0",
+    "author": {
+        "name": "Andy Burton",
+        "url": "http://andyburton.co.uk"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/andyburton/Sonic-Gauge/blob/master/LICENSE.mit"
+        }
+    ],
+    "bugs": "https://github.com/andyburton/Sonic-Gauge/issues",
+    "homepage": "https://github.com/andyburton/Sonic-Gauge",
+    "docs": "https://github.com/andyburton/Sonic-Gauge",
+    "download": "https://github.com/andyburton/Sonic-Gauge",
+    "dependencies": {
+        "jquery": ">=1.9",
+		"raphael": ">=2.1.0"
+    }
+}
