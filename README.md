@@ -136,4 +136,4 @@ Tested with jQuery 1.9.0 and RaphaelJS 2.1.0, hooked up to a node.js server with
 Example
 -------
 
-See example.htm for further details and demonstrations.
+See [example.htm](https://github.com/andyburton/Sonic-Gauge/blob/master/example.htm) for further details and demonstrations.
