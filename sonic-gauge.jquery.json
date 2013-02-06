@@ -8,7 +8,7 @@
 		"raphaeljs",
 		"svg"
     ],
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": {
         "name": "Andy Burton",
         "url": "http://andyburton.co.uk"
@@ -25,6 +25,6 @@
     "download": "https://github.com/andyburton/Sonic-Gauge",
     "dependencies": {
         "jquery": ">=1.9",
-		"raphael": ">=2.1.0"
+	"raphael": ">=2.1.0"
     }
 }

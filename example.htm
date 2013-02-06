@@ -5,14 +5,18 @@
 		
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-		<script src="jquery.sonic-gauge-v0.1.0.min.js"></script>
+		<script src="jquery.sonic-gauge.js"></script>
 		
 		<script>
 		$(function (){
-
-			var GaugeA = $('#a').SonicGauge ();
-
-			var GaugeB = $('#b').SonicGauge ({
+			
+			// Default gauge
+			
+//			var DefaultGauge = $('#default').SonicGauge ();
+			
+			// Create speedometer gauge
+			
+			var Speedometer = $('#speedometer').SonicGauge ({
 				label	: 'Speed (MPH)',
 				start	: {angle: -225, num: 0},
 				end		: {angle: 45, num: 160},
@@ -30,45 +34,142 @@
 						line: {"width": 8, "stroke": "none", "fill": "#999999"}
 					}
 				],
-				style	: {
-					"label" : {"text-anchor": "middle", "fill": "#fff", "font-size": 16}
-				},
-				animation_speed : 100
+				animation_speed : 200
 			});
-
-			var GaugeC = $('#c').SonicGauge ({
-				label	: 'Current (mA)',
+			
+			// Create ammeter gauge
+			
+			var Ammeter = $('#ammeter').SonicGauge ({
+				label	: 'Current (A)',
 				margin	: 50,
 				start	: {angle: -225, num: 0},
 				end		: {angle: 45, num: 1},
+				digital	: {
+					"width"				: "25%",
+					"font-size"			: 19,
+					"color"				: '#fff',
+					"text-align"		: "center",
+					"border"			: "2px solid #590303",
+					"border-radius"		: 25,
+					"padding"			: 5,
+					"background-color"	: "#a83209"
+				},
+				digital_toFixed	: 5,
 				markers	: [
 					{
-						gap: 10,
-						divide: 100,
+						gap: 0.1,
 						toFixed: 2,
 						line: {"width": 20, "stroke": "none", "fill": "#eeeeee"},
 						text: {"space": 30, "text-anchor": "middle", "fill": "#333333", "font-size": 18}
 					},{
-						gap: 5,
-						divide: 100,
+						gap: 0.05,
 						toFixed: 3,
 						line: {"width": 10, "stroke": "none", "fill": "#aaaaaa"},
 						text: {"space": 20, "text-anchor": "middle", "fill": "#333333", "font-size": 10},
 					},{
-						gap: 2.5,
-						divide: 100,
+						gap: 0.025,
 						line: {"width": 3, "stroke": "none", "fill": "#999999"}
 					}
 				],
 				style	: {
 					"outline"	: {"fill": "r#f46a3a-#890b0b", "stroke": "#590303", "stroke-width": 4},
 					"center"	: {"fill": "#ae1e1e", "diameter": 8, "stroke": "#590303", "stroke-width": 1},
-					"needle"	: {"stroke": "none", "fill": "#fbdbdb"},
-					"label"		: {"text-anchor": "middle", "fill": "#fff", "font-size": 14}
+					"needle"	: {"fill": "#fbdbdb"},
+					"label"		: {"font-size": 14}
 				}
 			});
-
-			function changeSpeed (current, increment, target) {
+			
+			// Create altimeter gauge
+			
+			var Altimeter = $('#altimeter').SonicGauge ({
+				label	: {
+					"value"		: 'ALT (FT)',
+					"margin_y"	: 80
+				},
+				start	: {angle: -90, num: 0},
+				end		: {angle: 270, num: 1000},
+				animation_speed : 200,
+				default_num		: 18000,
+				digital	: {
+					"width"				: 80,
+					"font-size"			: 16,
+					"color"				: '#fff',
+					"border"			: "1px solid #eee",
+					"border-radius"		: 3,
+					"padding"			: 2,
+					"background-color"	: "#222",
+					"margin-top"		: -40
+				},
+				markers	: [
+					{
+						gap		: 100,
+						value	: {divide: 100},
+						line	: {"width": 20, "height": 6, "stroke": "none", "fill": "#eeeeee"},
+						text	: {"space": -37, "text-anchor": "middle", "fill": "#fff", "font-size": 26}
+					},{
+						gap		: 20,
+						line	: {"width": 10, "stroke": "none", "fill": "#aaaaaa"},
+					}
+				],
+				style	: {
+					"outline"	: {"fill": "#000", "stroke": "#555", "stroke-width": 4},
+					"center"	: {"fill": "#222", "diameter": 8, "stroke": "#444", "stroke-width": 1},
+					"needle"	: {"fill": "#fff"},
+				}
+			});
+			
+			// Create clock
+			
+			var Clock = $('#clock').SonicGauge ({
+				start	: {angle: -90, num: 0},
+				end		: {angle: 270, num: 60},
+				animation_speed : 1000,
+				default_num		: getTimestamp (),
+				digital	: false,
+				markers	: [
+					{
+						gap		: 5,
+						value	: {divide: 5},
+						line	: {"width": 14, "height": 5, "stroke": "none", "fill": "#cff0ab"},
+						text	: {"space": -30, "text-anchor": "middle", "fill": "#cff0ab", "font-size": 22}
+					},{
+						gap		: 1,
+						line	: {"width": 10, "stroke": "none", "fill": "#fff"},
+					}
+				],
+				style	: {
+					"outline"	: {"fill": "#333", "stroke": "#ccc", "stroke-width": 4},
+					"center"	: {"fill": "#cff0ab", "diameter": 10}
+				},
+				needles	: [
+					{
+						// Second hand
+						style	: {"fill": "#cff0ab", "width": 140, "height": 1}
+					},{
+						// Minute hand
+						value	: {divide: 60}, // 1 rotation per minute
+						style	: {"fill": "#0054ff", "width": 128, "height": 3}
+					},{
+						// Hour hand
+						value	: {divide: 720}, // 1 rotation every 12 hours
+						style	: {"fill": "#cc0000", "width": 90, "height": 4}
+					}
+				]
+			});
+			
+			// Cycle gauge up and down
+			
+			function cycleGauge (el, delay, increment, min, max, current, target) {
+				
+				if (typeof current == "undefined")
+				{
+					current = min;
+				}
+				
+				if (typeof target == "undefined")
+				{
+					target = max;
+				}
 				
 				if (current < target)
 				{
@@ -80,23 +181,44 @@
 				}
 				else
 				{
-					changeSpeed (current, increment, target == 0? 160 : 0);
+					cycleGauge (el, delay, increment, min, max, current, target == min? max : min);
 					return;
 				}
 				
-				GaugeB.SonicGauge ('val', current);
+				el.SonicGauge ('val', current);
 				setTimeout (function () {
-					changeSpeed (current, increment, target);
-				}, 100);
+					cycleGauge (el, delay, increment, min, max, current, target);
+				}, delay);
 				
 			}
 		
-			changeSpeed (0,5,160)
+			cycleGauge (Speedometer, 200, 5, 0, 160);
+			cycleGauge (Altimeter, 200, 10, 0, 35000, 18000);
+			
+			// Randomly set ammeter value
 			
 			setInterval (function () {
-				GaugeC.SonicGauge ('val', Math.random ())
+				Ammeter.SonicGauge ('val', Math.random ())
 			}, 1000)
-
+			
+			// Update clock every second
+			
+			function getTimestamp ()
+			{
+				var d	= new Date ();
+				return Math.round (d.getTime () / 1000) + (d.getTimezoneOffset () * 3600);
+			}
+			
+			setInterval (function () {
+				Clock.SonicGauge ('val', getTimestamp ());
+			}, 1000)
+			
+			// Bind event whenever the clock value is updated
+			
+			Clock.on ('update', function (e, data) {
+				//console.log ('clock is updated: ' + data);
+			});
+			
 		});
 		</script>
 		
@@ -111,9 +233,11 @@
 	
 	<body>
 		
-		<div id='a' class="gauge"></div>
-		<div id='b' class="gauge"></div>
-		<div id='c' class="gauge"></div>
+		<!--<div id='default' class="gauge"></div>-->
+		<div id='speedometer' class="gauge"></div>
+		<div id='ammeter' class="gauge"></div>
+		<div id='altimeter' class="gauge"></div>
+		<div id='clock' class="gauge"></div>
 		
 	</body>
 	
