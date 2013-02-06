@@ -115,12 +115,24 @@
 					"outline"	: {"fill": "#000", "stroke": "#555", "stroke-width": 4},
 					"center"	: {"fill": "#222", "diameter": 8, "stroke": "#444", "stroke-width": 1},
 					"needle"	: {"fill": "#fff"},
-				}
+				},
+				needles : [
+					{
+						// 1 rotation every 1,000 ft
+					},{
+						value: {divide: 10}, // 1 rotation every 10,000 ft
+						style: {width: 110, height: 2}
+					},{
+						value: {divide: 100}, // 1 rotation every 100,000 ft
+						style: {width: 75, height: 4}
+					}
+				]
 			});
 			
 			// Create clock
 			
 			var Clock = $('#clock').SonicGauge ({
+				label	: "Clock",
 				start	: {angle: -90, num: 0},
 				end		: {angle: 270, num: 60},
 				animation_speed : 1000,
