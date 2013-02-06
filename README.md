@@ -1,7 +1,7 @@
 Sonic-Gauge
 ===========
 
-jQuery plugin to create and display SVG gauges using RaphaeJS
+jQuery plugin to create and display SVG gauges using RaphaelJS
 
 ![Example Gauages](https://raw.github.com/andyburton/Sonic-Gauge/master/example.png)
 
