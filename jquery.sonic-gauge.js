@@ -1,6 +1,6 @@
 
 /**
- * Sonic Gauge jQuery Plugin v0.2.0
+ * Sonic Gauge jQuery Plugin v0.2.1
  * jQuery plugin to create and display SVG gauges using RaphaelJS
  * 
  * Copyright (c) 2013 Andy Burton (http://andyburton.co.uk)
@@ -63,6 +63,13 @@
 
 		draw : function ()
 		{
+			
+			// Set element size
+			// This fixes the firefox issue causing the digital dial position to be incorrect
+			// As the raphael canvas still hasnt rendered causing incorrect width/height
+			
+			this.width (this.settings.canvas_d);
+			this.height (this.settings.canvas_d);
 			
 			// Init Raphael element
 			
@@ -434,7 +441,7 @@ if (typeof (jQuery.fn.center) === "undefined") {
 		
 		if (typeof p === "undefined")
 		{
-			var p = this.parent ();
+			p = this.parent ();
 		}
 		
 		p.css ("position", "relative");
