@@ -1,6 +1,6 @@
 
 /**
- * Sonic Gauge jQuery Plugin v0.2.1
+ * Sonic Gauge jQuery Plugin v0.2.2
  * jQuery plugin to create and display SVG gauges using RaphaelJS
  * 
  * Copyright (c) 2013 Andy Burton (http://andyburton.co.uk)
@@ -51,7 +51,7 @@
 			this.settings.canvas_r	= this.settings.canvas_d / 2;
 			this.settings.speedo_d	= this.settings.canvas_d - this.options.margin * 2;
 			this.settings.speedo_r	= this.settings.speedo_d / 2;
-			this.settings.increment	= (this.options.end.angle - this.options.start.angle) / this.options.end.num;
+			this.settings.increment	= (this.options.end.angle - this.options.start.angle) / (this.options.end.num - this.options.start.num);
 			
 			return this;
 			
@@ -142,11 +142,12 @@
 					this.gap *= 10;
 				}
 				
-				var end	= p.options.end.num * divide;
+				var start	= p.options.start.num * divide;
+				var end		= p.options.end.num * divide;
 				
 				// Add marker points
 				
-				for (var count = 0; count <= end; count += this.gap)
+				for (var count = start; count <= end; count += this.gap)
 				{
 					
 					var val	= divide > 1? count / divide : count;
@@ -163,7 +164,7 @@
 					
 					// Work out angle of rotation for value
 					
-					var a	= p.settings.increment * val + p.options.start.angle;
+					var a	= p.settings.increment * (val - start) + p.options.start.angle;
 					
 					// Work out relative to complete 360 rotation
 					
@@ -348,7 +349,7 @@
 
 				}
 				
-				this.animate ({transform: "r" + (p.settings.increment * new_val + p.options.start.angle) + "," + p.settings.canvas_r + "," + p.settings.canvas_r}, p.options.animation_speed);
+				this.animate ({transform: "r" + (p.settings.increment * (new_val - p.options.start.num) + p.options.start.angle) + "," + p.settings.canvas_r + "," + p.settings.canvas_r}, p.options.animation_speed);
 			
 			});
 			
