@@ -1,6 +1,6 @@
 
 /**
- * Sonic Gauge jQuery Plugin v0.2.2
+ * Sonic Gauge jQuery Plugin v0.3.0
  * jQuery plugin to create and display SVG gauges using RaphaelJS
  * 
  * Copyright (c) 2013 Andy Burton (http://andyburton.co.uk)
@@ -64,6 +64,10 @@
 		draw : function ()
 		{
 			
+			// Reference scope
+			
+			var p	= this;
+			
 			// Set element size
 			// This fixes the firefox issue causing the digital dial position to be incorrect
 			// As the raphael canvas still hasnt rendered causing incorrect width/height
@@ -108,9 +112,43 @@
 				var label	= this.gauge.text (label_x, label_y, this.options.label.value).attr (this.options.style.label);
 			}
 			
+			// Draw sectors
+			// Thanks to Thomas M aka Arctic SnowSky
+
+			this.sectors	= [];
+
+			$.each (this.options.sectors, function (i) {
+				
+				this.style = $.extend (true, p.options.style.sector, this.style);
+
+				if (!(isNaN (this.start) || isNaN (this.end)))
+				{
+					
+					var startAngle	= p.settings.increment * (this.start - p.options.start.num) + p.options.start.angle;
+					var endAngle	= p.settings.increment * (this.end - p.options.start.num) + p.options.start.angle;
+					
+					var r			= this.radius? this.radius : p.settings.speedo_r;
+					var rad			= Math.PI / 180;
+					
+					var x1 = p.settings.canvas_r + r * Math.cos (startAngle * rad),
+						x2 = p.settings.canvas_r + r * Math.cos (endAngle * rad),
+						y1 = p.settings.canvas_r + r * Math.sin (startAngle * rad),
+						y2 = p.settings.canvas_r + r * Math.sin (endAngle * rad);
+
+					var sect = p.gauge.path ([
+						"M", p.settings.canvas_r, p.settings.canvas_r,
+						"L", x2, y2,
+						"A", r, r, 0, + (endAngle - startAngle > 180),
+						0, x1, y1, "z"]).attr (this.style);
+
+					p.sectors.push (sect);
+					
+				}
+				
+			});
+			
 			// Generate markers
 			
-			var p			= this;
 			var markers		= [];
 
 			$.each (this.options.markers, function () {
@@ -263,7 +301,7 @@
 				
 				this.style = $.extend (true, p.options.style.needle, this.style);
 				
-				var val	= this.default_num;
+				var val	= this.default_num - p.options.start.num;
 				
 				if (typeof this.value == "object")
 				{
@@ -393,6 +431,7 @@
 		digital			: {},
 		digital_toFixed	: 0,
 		needles			: [{}],
+		sectors			: [{}],
 		markers			: [
 			{
 				gap: 10,

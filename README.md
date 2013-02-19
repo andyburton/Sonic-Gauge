@@ -172,6 +172,21 @@ Array of gauge needle indicators. The default displays a single needle.
 	
 		* **multiply** _(integer)_  
 		Multiply the gauge value by this number for the needle to display.  
+	
+* **sectors** _(object, default: [{}])_  
+Array of gauge sector indicators.  
+
+	* **start** _(integer, required)_  
+	The start value of the sector.  
+
+	* **end** _(integer, required)_  
+	The end value of the sector.  
+	
+	* **radius** _(integer, default: gauge radius)_  
+	The sector radius (i.e height).  
+	
+	* **style** _(object, default: options.style.needle)_  
+	Raphael style attribute for the sector (see http://raphaeljs.com/reference.html#Element.attr)  
 
 
 Testing
