@@ -185,7 +185,7 @@ Array of gauge sector indicators.
 	* **radius** _(integer, default: gauge radius)_  
 	The sector radius (i.e height).  
 	
-	* **style** _(object, default: options.style.needle)_  
+	* **style** _(object)_  
 	Raphael style attribute for the sector (see http://raphaeljs.com/reference.html#Element.attr)  
 
 
