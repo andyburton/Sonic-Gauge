@@ -12,14 +12,14 @@
 			
 			// Default gauge
 			
-//			var DefaultGauge = $('#default').SonicGauge ();
+			var DefaultGauge = $('#default').SonicGauge ();
 			
 			// Create speedometer gauge
 			
 			var Speedometer = $('#speedometer').SonicGauge ({
 				label	: 'Speed (MPH)',
-				start	: {angle: -225, num: -100},
-				end		: {angle: 45, num: 100},
+				start	: {angle: -225, num: 0},
+				end		: {angle: 45, num: 180},
 				markers	: [
 					{
 						gap: 20,
@@ -169,6 +169,71 @@
 				]
 			});
 			
+				// Create thermometer gauge
+			
+			var Thermometer = $('#thermometer').SonicGauge ({
+				label	: 'Temp. (\u00B0C)',
+				start	: {angle: -225, num: -40},
+				end		: {angle: 45, num: 60},
+				digital	: {
+					"width"				: "16%",
+					"font-size"			: 19,
+					"color"				: '#333',
+					"text-align"		: "center",
+					"border-radius"		: 25,
+					"padding"			: 5,
+					"background-color"	: "#e6f0f8",
+					"margin-top"		: 80
+				},
+				digital_toFixed	: 1,
+				animation_speed	: 500,
+				markers	: [
+					{
+						gap: 20,
+						line: {"width": 20, "stroke": "none", "fill": "#eeeeee"},
+						text: {"space": 22, "text-anchor": "middle", "fill": "#333333", "font-size": 18}
+					},{
+						gap: 10, 
+						line: {"width": 12, "stroke": "none", "fill": "#aaaaaa"},
+						text: {"space": 18, "text-anchor": "middle", "fill": "#333333", "font-size": 14}
+					},{
+						gap: 5, 
+						line: {"width": 8, "stroke": "none", "fill": "#999999"}
+					}
+				],
+				needles : [{ style: { height: 2} } ],
+				sectors : [
+					{
+						start: -40,
+						end: -25,
+						style: {fill: "rgba(0,0,255,.5)", stroke: "blue", "stroke-width": 0}
+					},{
+						start: -30,
+						end: -20,
+						style: {fill: "rgba(90,200,220,.5)", stroke: "cyan", "stroke-width": 0}
+					},{
+						start: 10,
+						end: 20,
+						radius: 125,
+						style: {fill: "rgba(50,220,50,.5)", stroke: "cyan", "stroke-width": 0}
+					},{
+						start: 30,
+						end: 50,
+						style: {fill: "rgba(250,230,70,.5)", stroke: "yellow", "stroke-width": 0}
+					},{
+						start: 40,
+						end: 60,
+						style: {fill: "rgba(255,0,0,.5)", stroke: "red", "stroke-width": 0}
+					}
+				],
+				style	: {
+					"outline"	: {"fill": "#dedede", "stroke": "#333", "stroke-width": 2},
+					"center"	: {"fill": "#ae1e1e", "diameter": 8, "stroke": "#590303", "stroke-width": 1},
+					"needle"	: {"fill": "#000"},
+					"label"		: {"fill": "#000", "font-size": 14}
+				}
+			});
+			
 			// Cycle gauge up and down
 			
 			function cycleGauge (el, delay, increment, min, max, current, target) {
@@ -204,13 +269,14 @@
 				
 			}
 		
-//			cycleGauge (Speedometer, 200, 5, 0, 160);
-//			cycleGauge (Altimeter, 200, 10, 0, 35000, 18000);
+			cycleGauge (Speedometer, 200, 5, 0, 160);
+			cycleGauge (Altimeter, 200, 10, 0, 35000, 18000);
+			cycleGauge (Thermometer, 500, .5, -40, 60, 0);
 			
 			// Randomly set ammeter value
 			
 			setInterval (function () {
-//				Ammeter.SonicGauge ('val', Math.random ())
+				Ammeter.SonicGauge ('val', Math.random ())
 			}, 1000)
 			
 			// Update clock every second
@@ -222,7 +288,7 @@
 			}
 			
 			setInterval (function () {
-//				Clock.SonicGauge ('val', getTimestamp ());
+				Clock.SonicGauge ('val', getTimestamp ());
 			}, 1000)
 			
 			// Bind event whenever the clock value is updated
@@ -245,11 +311,13 @@
 	
 	<body>
 		
-		<!--<div id='default' class="gauge"></div>-->
+		<div id='default' class="gauge"></div>
 		<div id='speedometer' class="gauge"></div>
-<!--		<div id='ammeter' class="gauge"></div>
+		<div id='ammeter' class="gauge"></div>
+		<br clear="both">
 		<div id='altimeter' class="gauge"></div>
-		<div id='clock' class="gauge"></div>-->
+		<div id='clock' class="gauge"></div>
+		<div id='thermometer' class="gauge"></div>
 		
 	</body>
 	
