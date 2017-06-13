@@ -284,7 +284,7 @@
 			function getTimestamp ()
 			{
 				var d	= new Date ();
-				return Math.round (d.getTime () / 1000) + (d.getTimezoneOffset () * 3600);
+				return Math.round (d.getTime () / 1000) - (d.getTimezoneOffset () * 60);
 			}
 			
 			setInterval (function () {
